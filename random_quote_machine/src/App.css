@@ -1,0 +1,49 @@
+.App {
+  margin-top: 20px;
+  text-align: center;
+  border: 2px solid;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  font-family: 'Playfair Display', serif;
+}
+
+.App-header {
+  background-color: moccasin;
+  height: 75px;
+  padding: 20px;
+  color: midnightblue;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.quote-container {
+  horiz-align: center;
+  background-image: url("speech_balloon.png");
+  background-size: cover;
+  height: 300px;
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+#text {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: midnightblue;
+  margin: 85px 50px 20px 50px;
+}
+
+#author {
+  font-size: 20px;
+}
+
+button, a {
+  margin: 20px 20px 20px 0;
+}
