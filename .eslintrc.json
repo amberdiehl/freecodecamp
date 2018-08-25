@@ -1,0 +1,67 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": [
+    "jquery",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true,
+    "jquery": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "__DEVELOPMENT__": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "arrow-body-style": [
+      2,
+      "as-needed"
+    ],
+    "comma-dangle": [
+      2,
+      "always-multiline"
+    ],
+    "import/imports-first": 0,
+    "import/newline-after-import": 0,
+    "import/no-dynamic-require": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-named-as-default": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "indent": [
+      2,
+      4,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "max-len": 2,
+    "newline-per-chained-call": 0,
+    "no-confusing-arrow": 0,
+    "no-console": 1,
+    "no-use-before-define": 0,
+    "prefer-template": 2,
+    "require-yield": 0,
+    "import/no-webpack-loader-syntax": 0,
+    "class-methods-use-this": [1, { "exceptMethods": ["render"] }]
+  }
+}
