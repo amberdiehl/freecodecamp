@@ -22,6 +22,11 @@
     margin-top: 15px;
 }
 
+#editor {
+    width: 100%;
+    min-height: 250px;
+}
+
 .main-section-right {
     margin-top: 15px;
 }

@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import './App.css';
 
 class InputTextArea extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <textarea id="editor"
@@ -20,9 +17,6 @@ InputTextArea.propTypes = {
 };
 
 class MarkdownPreview extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <div id="preview"></div>
@@ -55,9 +49,30 @@ class App extends Component {
         }, this.updatePreview);
     }
 
+    componentDidMount() {
+        let defaultState = "# I am a H1 heading\n" +
+            "## I am a H2 heading\n" +
+            "[I am an inline-style link](https://www.google.com)\n" +
+            "Inline `code` has a `single back-tick` that surrounds it\n" +
+            "```javascript\nlet sillyMessage = 'Hello World!';\nalert(sillyMessage);\n```\n" +
+            ">I am a block quote that spans over\n" +
+            ">more than one line.\n" +
+            "![alt text](https://github.com/adam-p/markdown-here/raw/master/" +
+            "src/common/images/icon48.png \"Logo Title Text 1\")\n" +
+            "**And I am some bold text!**\n" +
+            "1. I am an ordered list item\n" +
+            "1. I am another orderd list item\n\n" +
+            "And last, but not least:\n" +
+            "* I am an unordered list item";
+        this.setState({
+            inputValue: defaultState,
+        }, this.updatePreview);
+        document.getElementById('editor').value = defaultState;
+    }
+
     updatePreview() {
-        console.log(`updatePreview: ${this.state.inputValue}.`);
-        document.getElementById('preview').innerHTML = window.marked(this.state.inputValue);
+        document.getElementById('preview').innerHTML =
+            window.marked(this.state.inputValue, {breaks:true});
     }
 
     render() {
