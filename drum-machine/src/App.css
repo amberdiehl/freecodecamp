@@ -1,0 +1,81 @@
+.App-header {
+    background-color: slateblue;
+    height: 75px;
+    width: 100%;
+    padding: 26px;
+    color: white;
+    text-align: center;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.container-left {
+    margin-top: 40px;
+    padding-right: 60px;
+}
+
+.container-right {
+    margin-top: 40px;
+}
+
+.drum-pad {
+    padding: 15px 20px 20px 20px;
+    font-size: large;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+}
+
+#clap {
+    background-color: midnightblue;
+}
+
+#crash {
+    background-color: chocolate;
+}
+
+#hat {
+    background-color: orangered;
+}
+
+#kick {
+    background-color: magenta;
+}
+
+#perc {
+    background-color: orange;
+}
+
+#revhat {
+    background-color: olive;
+}
+
+#scratch {
+    background-color: hotpink;
+}
+
+#snare {
+    background-color: slateblue;
+}
+
+#tom {
+    background-color: lightseagreen;
+}
+
+#error {
+    color: firebrick;
+    font-size: 20px;
+}
+
+.instructions {
+    color: midnightblue;
+    font-size: 16px;
+}
