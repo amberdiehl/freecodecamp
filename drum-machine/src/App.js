@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 
-const AudioPlayer = (props) => {
-    return (
-        <div id={props.id} className="col-md-2 drum-pad">
-            {props.letter}
-            <audio id={props.letter} className="clip" src={props.item}
-                type="audio/wav">
-            </audio>
-        </div>
-    );
-};
+class AudioPlayer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render () {
+        return (
+            <div id={this.props.id} className="col-md-2 drum-pad">
+                {this.props.letter}
+                <audio id={this.props.letter} className="clip" src={this.props.item}
+                    type="audio/wav">
+                </audio>
+            </div>
+        );
+    }
+}
 AudioPlayer.propTypes = {
     id: PropTypes.string.isRequired,
     letter: PropTypes.string.isRequired,
