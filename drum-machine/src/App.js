@@ -31,12 +31,14 @@ class App extends Component {
     handleKeyPress(event) {
         let keyPressed = (/[a-z]/.test(event.key)) ? event.key.toUpperCase() : event.key;
         if (this.state.validKeys.includes(keyPressed)) {
-            let audioItem = document.getElementById(keyPressed.toUpperCase());
+            let audioItem = document.getElementById(keyPressed);
+            document.getElementById('display').innerText = audioItem.parentElement.id;
+            console.log(document.getElementById('display').innerText);
+            audioItem.currentTime=0;
             let playPromise = audioItem.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     // Automatic playback started!
-                    document.getElementById('display').innerText = audioItem.parentElement.id;
                 }).catch((error) => {
                     // Automatic playback failed.
                     // Show a UI element to let the user manually start playback.
@@ -109,7 +111,7 @@ class App extends Component {
                                     item={"./media/Tom.wav"}/>
                             </div>
                             <div className="row">
-                                <p id="display"/>
+                                <p>Clip played: <span id="display"/></p>
                             </div>
                         </div>
                     </div>
