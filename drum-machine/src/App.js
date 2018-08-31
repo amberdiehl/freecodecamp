@@ -24,6 +24,8 @@ class App extends Component {
         this.state = {
             validKeys: ['Q', 'W', 'E', 'A', 'S', 'D', 'Z', 'X', 'C'],
             keyError: '',
+            errorStyle: {display: 'none'},
+            display: '',
         };
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
@@ -32,8 +34,7 @@ class App extends Component {
         let keyPressed = (/[a-z]/.test(event.key)) ? event.key.toUpperCase() : event.key;
         if (this.state.validKeys.includes(keyPressed)) {
             let audioItem = document.getElementById(keyPressed);
-            document.getElementById('display').innerText = audioItem.parentElement.id;
-            console.log(document.getElementById('display').innerText);
+            this.setState({display: audioItem.parentElement.id});
             audioItem.currentTime=0;
             let playPromise = audioItem.play();
             if (playPromise !== undefined) {
@@ -46,11 +47,11 @@ class App extends Component {
                 });
             }
         } else {
-            document.getElementById('display').innerText = '';
+            this.setState({display: ''});
             this.setState({keyError: event.key});
-            document.getElementById('error').style.display = 'block';
+            this.setState({errorStyle: {display: 'block'}});
             setTimeout( () => {
-                document.getElementById('error').style.display = 'none';
+                this.setState({errorStyle: {display: 'none'}});
             }, 3000);
         }
     }
@@ -64,7 +65,6 @@ class App extends Component {
     }
 
     render() {
-        let errorStyle = {display: 'none'};
         const instructions = "For each item to the right, there is an associated drum sound. " +
             "To hear its sound, using your keyboard, press the letter shown. " +
             "You can use upper or lower case.";
@@ -81,7 +81,7 @@ class App extends Component {
                     <div className="row">
                         <div className="col-md-6 container-left">
                             <p className="instructions">{instructions}</p>
-                            <div id="error" style={errorStyle}>
+                            <div id="error" style={this.state.errorStyle}>
                                 Oops! I don't have a drum sound for {this.state.keyError}.
                                 <br/>Please try again.</div>
                         </div>
@@ -111,7 +111,7 @@ class App extends Component {
                                     item={"./media/Tom.wav"}/>
                             </div>
                             <div className="row">
-                                <p>Clip played: <span id="display"/></p>
+                                <p>Clip played: <span id="display">{this.state.display}</span></p>
                             </div>
                         </div>
                     </div>
