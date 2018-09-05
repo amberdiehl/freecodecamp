@@ -9,7 +9,7 @@ class AudioPlayer extends React.Component {
     render () {
         return (
             <a href="#">
-                <div id={this.props.id} className="col-md-2 drum-pad"
+                <div id={this.props.id} className="col-md-4 drum-pad"
                     data-letter={this.props.letter}>
                     {this.props.letter}
                     <audio id={this.props.letter} className="clip" src={this.props.item}

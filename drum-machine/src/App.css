@@ -18,7 +18,7 @@
 
 .container-left {
     margin-top: 40px;
-    padding-right: 60px;
+    padding-right: 15px;
 }
 
 .container-right {
@@ -26,14 +26,13 @@
 }
 
 .drum-pad {
-    padding: 20px 20px 20px 20px;
-    font-size: large;
-    height: 75px;
+    font-size: 100px;
     border-radius: 50%;
     color: white;
     text-align: center;
+    display: inline;
+    padding: 0px 20px 0px 20px;
     margin-right: 20px;
-    margin-bottom: 15px;
 }
 
 #clap {
@@ -42,6 +41,7 @@
 
 #crash {
     background-color: chocolate;
+    font-size: 80px;
 }
 
 #hat {
@@ -50,6 +50,7 @@
 
 #kick {
     background-color: magenta;
+    font-size: 120px;
 }
 
 #perc {
@@ -58,6 +59,7 @@
 
 #revhat {
     background-color: olive;
+    font-size: 60px;
 }
 
 #scratch {
@@ -66,6 +68,7 @@
 
 #snare {
     background-color: slateblue;
+    font-size: 160px;
 }
 
 #tom {
@@ -80,4 +83,8 @@
 .instructions {
     color: midnightblue;
     font-size: 16px;
+}
+
+a {
+    text-decoration: none !important;
 }
