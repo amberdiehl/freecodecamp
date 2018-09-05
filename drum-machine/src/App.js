@@ -8,12 +8,15 @@ class AudioPlayer extends React.Component {
     }
     render () {
         return (
-            <div id={this.props.id} className="col-md-2 drum-pad">
-                {this.props.letter}
-                <audio id={this.props.letter} className="clip" src={this.props.item}
-                    type="audio/wav">
-                </audio>
-            </div>
+            <a href="#">
+                <div id={this.props.id} className="col-md-2 drum-pad"
+                    data-letter={this.props.letter}>
+                    {this.props.letter}
+                    <audio id={this.props.letter} className="clip" src={this.props.item}
+                        type="audio/wav">
+                    </audio>
+                </div>
+            </a>
         );
     }
 }
@@ -33,24 +36,19 @@ class App extends Component {
             display: '',
         };
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event) {
+        if (event.target.dataset.letter) {
+            this.playAudioItem(document.getElementById(event.target.dataset.letter))
+        }
     }
 
     handleKeyPress(event) {
         let keyPressed = (/[a-z]/.test(event.key)) ? event.key.toUpperCase() : event.key;
         if (this.state.validKeys.includes(keyPressed)) {
-            let audioItem = document.getElementById(keyPressed);
-            this.setState({display: audioItem.parentElement.id});
-            audioItem.currentTime=0;
-            let playPromise = audioItem.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Automatic playback started!
-                }).catch((error) => {
-                    // Automatic playback failed.
-                    // Show a UI element to let the user manually start playback.
-                    console.log(`Ooops! ${error}`);
-                });
-            }
+            this.playAudioItem(document.getElementById(keyPressed));
         } else {
             this.setState({display: ''});
             this.setState({keyError: event.key});
@@ -58,6 +56,20 @@ class App extends Component {
             setTimeout( () => {
                 this.setState({errorStyle: {display: 'none'}});
             }, 3000);
+        }
+    }
+
+    playAudioItem(audioItem){
+        this.setState({display: audioItem.parentElement.id});
+        audioItem.currentTime=0;
+        let playPromise = audioItem.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Automatic playback started!
+            }).catch((error) => {
+                // Automatic playback failed.
+                console.log(`Ooops! ${error}`);
+            });
         }
     }
 
@@ -74,7 +86,7 @@ class App extends Component {
             "To hear its sound, using your keyboard, press the letter shown. " +
             "You can use upper or lower case.";
         return (
-            <div id="drum-machine" className="row">
+            <div id="drum-machine" className="row" onClick={this.handleClick}>
                 <div className="col-md-10 col-centered App" tabIndex="0">
                     <div className="row">
                         <div className="col-md-12">
