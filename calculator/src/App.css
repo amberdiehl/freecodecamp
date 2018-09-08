@@ -1,0 +1,99 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.calculator-container {
+    background-color: lavenderblush;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid darkgray;
+}
+
+.display {
+    text-align: right;
+    padding-right: 10px;
+    background-color: lightgray;
+    border-left: 1px solid darkgray;
+}
+
+#display-history {
+    font-size: 12px;
+    padding-top: 5px;
+    color: hotpink;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top: 1px solid darkgray;
+    min-height: 24px;
+}
+
+#display {
+    font-size: 36px;
+    font-weight: bolder;
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.row-container {
+    margin-top: 5px;
+}
+
+.btn-dark {
+    background-color: #ffbdd3;
+    border-color: #ffbdd3;
+    color: black;
+}
+
+.btn-danger {
+    background-color: #ff5757;
+    border-color: #ff5757;
+}
+
+.btn-warning {
+    background-color: #ff578f;
+    border-color: #ff578f;
+}
+
+.btn-warning:hover {
+    background-color: #57e3ff;
+    border-color: #57e3ff;
+}
