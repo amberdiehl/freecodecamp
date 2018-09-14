@@ -1,0 +1,194 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+    float: left;
+    margin-top: -2%;
+}
+
+.App-header {
+    background-color: #222;
+    height: 100px;
+    padding: 20px;
+    color: white;
+    text-align: left;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+:root {
+    --clock-rim: green;
+    --clock-face: mintcream;
+    --clock-sparkle: whitesmoke;
+    --clock-bell: gold;
+    --clock-feet: darkgreen;
+}
+
+.the-clock {
+    position: relative;
+    margin: auto;
+    display: block;
+    width: 450px;
+    height: 450px;
+}
+
+.face {
+    top: 70%;
+    left: 2.5%;
+    border-left: 4px solid lightsteelblue;
+    background: var(--clock-face, mintcream);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+}
+
+.clock-top {
+    top: 30%;
+    left: 25%;
+    background-color: transparent;
+    width: 50%;
+    height: 15%;
+    border-radius: 70% 70% 60% 60%;
+}
+
+.clock-middle {
+    top: 10%;
+    left: 25%;
+    background: transparent;
+    width: 50%;
+    height: 45%;
+    border-radius: 50%;
+}
+
+.clock-bottom {
+    top: 40%;
+    left: 23.5%;
+    background: var(--clock-rim, gray);
+    width: 53%;
+    height: 45%;
+    border-radius: 50%;
+}
+
+.right-feet {
+    top: 75%;
+    left: 70%;
+    background: var(--clock-feet, darkgreen);
+    width: 25%;
+    height: 30%;
+    border-radius: 50% 50% 50% 50%;
+    z-index: -2222;
+}
+
+.left-feet {
+    top: 75%;
+    left: 5%;
+    background: var(--clock-feet, darkgreen);
+    width: 25%;
+    height: 30%;
+    border-radius: 50% 50% 50% 50%;
+    z-index: -2222;
+}
+
+.sparkle {
+    top: 25%;
+    left: 15%;
+    background: var(--clock-sparkle, whitesmoke);
+    width: 8%;
+    height: 8%;
+    border-radius: 50%;
+}
+
+.bell-top-left {
+    top: 17%;
+    left: 12.5%;
+    background: darkgoldenrod;
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+}
+
+.bell-top-right {
+    top: 15%;
+    left: 65%;
+    background: darkgoldenrod;
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+}
+
+.right-bell {
+    top: 20%;
+    left: 60%;
+    background: var(--clock-bell, gold);
+    width: 30%;
+    height: 60%;
+    border-radius: 150px 150px 20px 30px;
+    transform: rotate(20deg);
+}
+
+.left-bell {
+    top: 22%;
+    left: 5%;
+    background: var(--clock-bell, gold);
+    width: 30%;
+    height: 60%;
+    border-radius: 150px 150px 20px 30px;
+    transform: rotate(-20deg);
+}
+
+.the-clock * {
+    position: absolute;
+}
+
+#time-left {
+    top: 23%;
+    left: 12%;
+    font-size: 60px;
+    color: steelblue;
+}
+.time-left {
+    top: 60%;
+    left: 30%;
+    font-size: 22px;
+    color: darkslategray;
+}
+
+.fas {
+    font-size: large;
+}
+
+.length-value {
+    background-color: silver;
+    font-size: xx-large;
+}
+
+.control-wrapper {
+    margin-top: 20px;
+}
