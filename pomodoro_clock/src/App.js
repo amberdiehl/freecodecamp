@@ -4,11 +4,18 @@ import logo from './logo.svg';
 import './App.css';
 
 
-const INITIAL_TIME_LEFT = '25:00';
 const INITIAL_SESSION_LENGTH = '25';
+const INITIAL_SESSION_COUNT = 1;
+const SESSION = 'session';
 const INITIAL_BREAK_LENGTH = '5';
+const INITIAL_BREAK_COUNT = 1;
+const BREAK = 'break';
+const INITIAL_TIME_LEFT = '25:00';
+const INITIAL_TIME_TYPE = SESSION;
 const START_ICON = 'fas fa-play-circle';
+const START_BUTTON_STYLE = 'btn btn-success btn-block';
 const STOP_ICON = 'fas fa-stop-circle';
+const STOP_BUTTON_STYLE = 'btn btn-danger btn-block';
 
 
 class App extends Component {
@@ -16,13 +23,21 @@ class App extends Component {
         super(props);
         this.state = {
             timeLeft: INITIAL_TIME_LEFT,
-            breakValue: INITIAL_BREAK_LENGTH,
+            timeType: INITIAL_TIME_TYPE,
             sessionValue: INITIAL_SESSION_LENGTH,
-            isRunning: false,
+            breakValue: INITIAL_BREAK_LENGTH,
+            sessionCount: INITIAL_SESSION_COUNT,
+            breakCount: INITIAL_BREAK_COUNT,
             iconStartStop: START_ICON,
+            styleStartStop: START_BUTTON_STYLE,
+            isRunning: false,
+            timer: null,
         };
+        this.audioItem = React.createRef();
         this.handleClickTimeWidget = this.handleClickTimeWidget.bind(this);
         this.handleClickStartStop = this.handleClickStartStop.bind(this);
+        this.evaluateTimeLeft = this.evaluateTimeLeft.bind(this);
+        this.changeTimeLeft = this.changeTimeLeft.bind(this);
         this.handleClickReset = this.handleClickReset.bind(this);
     }
     handleClickTimeWidget(type, button) {
@@ -34,36 +49,90 @@ class App extends Component {
         let newValue = 0;
         newValue = (button === '+') ? currentValue + 1 : currentValue - 1;
         newValue = (newValue > 60) ? 60 : newValue;
-        newValue = (newValue < 0) ? 0 : newValue;
+        newValue = (newValue < 1) ? 1 : newValue;
         this.setState({
             [widgetStateKey]: newValue.toString(),
         });
         if (type === 'session') {
             this.setState({
-                timeLeft: `${newValue}:00`,
+                timeLeft: `${this.formatTimePart(newValue)}:00`,
             })
         }
     }
     handleClickStartStop() {
         if (this.state.isRunning) {
+            clearInterval(this.state.timer);
             this.setState({
                 isRunning: false,
                 iconStartStop: START_ICON,
-            })
+                styleStartStop: START_BUTTON_STYLE,
+            });
         } else {
             this.setState({
                 isRunning: true,
                 iconStartStop: STOP_ICON,
-            })
+                styleStartStop: STOP_BUTTON_STYLE,
+                timer: setInterval(this.evaluateTimeLeft, 1000),
+            });
         }
     }
+    evaluateTimeLeft() {
+        let switchTo, valueKey, countKey, newCount;
+        const node = this.audioItem.current;
+        if (this.state.timeLeft === '00:00') {
+            node.currentTime=0;
+            node.play();
+            if ((this.state.sessionCount === 0) && (this.state.breakCount === 0 )) {
+                clearInterval(this.state.timer);
+            } else {
+                switchTo = (this.state.timeType === SESSION) ? BREAK : SESSION;
+                valueKey = `${switchTo}Value`;
+                countKey = `${this.state.timeType}Count`;
+                newCount = this.state[countKey] - 1;
+                this.setState({
+                    timeLeft: `${this.formatTimePart(this.state[valueKey])}:00`,
+                    timeType: switchTo,
+                    [countKey]: newCount,
+                })
+            }
+        } else {
+            this.changeTimeLeft();
+        }
+    }
+    changeTimeLeft() {
+        let minutes = parseInt(this.state.timeLeft.split(':')[0]);
+        let seconds = parseInt(this.state.timeLeft.split(':')[1]);
+        seconds -= 1;
+        if (seconds < 0) {
+            seconds = 59;
+            minutes -= 1;
+        }
+        if (minutes < 0) {
+            seconds = 0;
+            minutes = 0;
+        }
+        this.setState({
+            timeLeft: `${this.formatTimePart(minutes)}:${this.formatTimePart(seconds)}`,
+        })
+    }
+    formatTimePart(timePart) {
+        return (timePart < 10) ? `0${timePart}` : timePart;
+    }
     handleClickReset() {
+        const node = this.audioItem.current;
+        node.pause();
+        node.currentTime=0;
+        clearInterval(this.state.timer);
         this.setState({
             timeLeft: INITIAL_TIME_LEFT,
-            breakValue: INITIAL_BREAK_LENGTH,
+            timeType: INITIAL_TIME_TYPE,
             sessionValue: INITIAL_SESSION_LENGTH,
-            isRunning: false,
+            sessionCount: INITIAL_SESSION_COUNT,
+            breakValue: INITIAL_BREAK_LENGTH,
+            breakCount: INITIAL_BREAK_COUNT,
             iconStartStop: START_ICON,
+            styleStartStop: START_BUTTON_STYLE,
+            isRunning: false,
         })
     }
 
@@ -84,8 +153,8 @@ class App extends Component {
                     <div className="row">
                         <div className="col-md-8 col-centered">
                             <div className="row">
-                                <div className="col-md-6">
-                                    <p>Pomodoro Clock Setup</p>
+                                <div className="col-md-6 left-side">
+                                    <p className={"setup-title"}>Pomodoro Clock Setup</p>
                                     <div className={"row"}>
                                         <TimeWidget
                                             value={this.state.breakValue}
@@ -101,9 +170,12 @@ class App extends Component {
                                     <ControlWidget
                                         onClickStartStop={this.handleClickStartStop}
                                         icon={this.state.iconStartStop}
+                                        styleStartStop={this.state.styleStartStop}
                                         onClickReset={this.handleClickReset}/>
+                                    <audio id="beep" ref={this.audioItem}
+                                        src="./media/Cuckoo.mp3" type="audio/mp3"/>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-6 right-side">
                                     <div className="the-clock">
                                         <div className="clock-bottom">
                                             <div className="right-feet"/>
@@ -120,7 +192,7 @@ class App extends Component {
                                                 <div className="sparkle"/>
                                                 <div id="time-left">{this.state.timeLeft}</div>
                                                 <div id="timer-label" className="time-left">
-                                                    session</div>
+                                                    {this.state.timeType}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -151,26 +223,33 @@ class TimeWidget extends Component {
         return (
             <div className={"col-sm-5 col-centered"}>
                 <div className={"row"}>
-                    <div id={widgetLabelId} className={"col-sm-12"}>{widgetLabel}</div>
+                    <div id={widgetLabelId} className={"col-sm-12 widget-label"}>
+                        {widgetLabel}</div>
                 </div>
                 <div className={"row"}>
-                    <div className="col-sm-12">
-                        <button id={widgetButtonIncrementId} className="btn btn-success btn-block"
-                            onClick={() => {this.props.onClick(this.props.widgetType, '+')}}>
-                            <i className="fas fa-chevron-circle-up" aria-hidden="true"/>
-                        </button>
-                    </div>
-                </div>
-                <div className="row">
-                    <div id={widgetLengthId} className="col-sm-12 length-value">
-                        {this.props.value}</div>
-                </div>
-                <div className={"row"}>
-                    <div className="col-sm-12">
-                        <button id={widgetButtonDecrementId} className="btn btn-success btn-block"
-                            onClick={() => {this.props.onClick(this.props.widgetType, '-')}}>
-                            <i className="fas fa-chevron-circle-down" aria-hidden="true"/>
-                        </button>
+                    <div className={"col-sm-12 widget-wrapper"}>
+                        <div className={"row"}>
+                            <div className="col-sm-12">
+                                <button id={widgetButtonIncrementId}
+                                    className="btn btn-success btn-block widget-button-top"
+                                    onClick={() => {this.props.onClick(this.props.widgetType, '+')}}>
+                                    <i className="fas fa-chevron-circle-up" aria-hidden="true"/>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div id={widgetLengthId} className="col-sm-12 length-value">
+                                {this.props.value}</div>
+                        </div>
+                        <div className={"row"}>
+                            <div className="col-sm-12">
+                                <button id={widgetButtonDecrementId}
+                                    className="btn btn-success btn-block widget-button-bottom"
+                                    onClick={() => {this.props.onClick(this.props.widgetType, '-')}}>
+                                    <i className="fas fa-chevron-circle-down" aria-hidden="true"/>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -190,11 +269,12 @@ class ControlWidget extends Component {
             <div className={"row"}>
                 <div className={"col-md-12 control-wrapper"}>
                     <div className={"row"}>
-                        <div className={"col-md-12 controls"}>Start, Stop, and Reset Controls</div>
+                        <div className={"col-md-12 controls-title"}>
+                            Start/Stop, and Reset Controls</div>
                     </div>
                     <div className={"row"}>
                         <div className={"col-md-6"}>
-                            <button id={"start_stop"} className="btn btn-success btn-block"
+                            <button id={"start_stop"} className={this.props.styleStartStop}
                                 onClick={this.props.onClickStartStop}>
                                 <i className={this.props.icon} aria-hidden="true"/>
                             </button>
@@ -214,6 +294,7 @@ class ControlWidget extends Component {
 ControlWidget.propTypes = {
     onClickStartStop: PropTypes.func.isRequired,
     icon: PropTypes.string.isRequired,
+    styleStartStop: PropTypes.string.isRequired,
     onClickReset: PropTypes.func.isRequired,
 };
 

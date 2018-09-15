@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    font-family: 'Nunito', sans-serif;
 }
 
 .App-logo {
@@ -168,9 +169,9 @@
 }
 
 #time-left {
-    top: 23%;
+    top: 10%;
     left: 12%;
-    font-size: 60px;
+    font-size: 80px;
     color: steelblue;
 }
 .time-left {
@@ -180,15 +181,51 @@
     color: darkslategray;
 }
 
-.fas {
-    font-size: large;
+.left-side {
+    font-family: 'Pacifico', cursive;
+}
+.right-side {
+    font-family: 'Pacifico', cursive;
 }
 
+.setup-title {
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.widget-label {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+.widget-wrapper {
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: var(--clock-face, mintcream);
+}
 .length-value {
-    background-color: silver;
-    font-size: xx-large;
+    background-color: steelblue;
+    color: white;
+    font-size: 44px;
+    padding: 0;
+    margin: 2px 0 2px 15px;
+    display: block;
+    max-width: 81%;
+    border-radius: 5px;
+}
+.widget-button-top {
+    margin-top: 5px;
+}
+.widget-button-bottom {
+    margin-bottom: 5px;
 }
 
 .control-wrapper {
-    margin-top: 20px;
+    margin-top: 35px;
+}
+.controls-title {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+.fas {
+    font-size: x-large;
 }
